@@ -1,0 +1,48 @@
+<div class="card">
+    <div class="card-body">
+        {{ form_start(form, { 'method': 'GET' }) }}
+            <div class="row">
+                <div class="col-md-12">
+                    <strong>Wyszukaj:</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <hr size="1">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    {{ form_row(form.id) }}
+                </div>
+                <div class="col-md-4 form-group">
+                    {{ form_row(form.name) }}
+                </div>
+                <div class="col-md-4 form-group">
+                    {{ form_row(form.city) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    {{ form_row(form.population) }}
+                </div>
+                <div class="col-md-6 form-group">
+                    {{ form_row(form.area) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <hr size="1">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group text-right">
+                    <button type="submit" class="btn btn-secondary">
+                        <i class="fa fa-search"></i>
+                        Wyszukaj
+                    </button>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>

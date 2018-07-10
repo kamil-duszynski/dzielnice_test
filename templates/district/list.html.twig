@@ -1,0 +1,122 @@
+{% extends 'layout.html.twig' %}
+{% form_theme form 'forms/form_div_layout.html.twig' %}
+
+{% block title %}
+    Lista dzielnic
+{% endblock %}
+
+{% block navigation %}
+    <a class="btn btn-success" href="{{ path('district.add') }}">
+        <i class="fa fa-plus"></i> Dodaj nową
+    </a>
+    <a class="btn btn-secondary import" href="{{ path('district.import') }}">
+        <i class="fa fa-download"></i> Import automatyczny
+    </a>
+{% endblock %}
+
+{% block content %}
+    <div class="alert alert-warning wait-alert" style="display: none;">
+        <div class="row">
+            <div class="col-md-12">
+                <p><strong><i class="fa fa-info-circle"></i> Aktualizacja danych</strong></p>
+                <p>Operacja może potrwać ok 2 minuty. Proszę czekać...</p>
+            </div>
+        </div>
+    </div>
+
+    {% include 'district/search.list.html.twig' %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr size="1">
+        </div>
+    </div>
+
+    <p class="card-text">
+        Znaleziono {{ pagination.getTotalItemCount }} dzielnic
+    </p>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <tr>
+                        <th>{{ knp_pagination_sortable(pagination, 'Id', 'd.id') }}</th>
+                        <th{% if pagination.isSorted('d.Name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Nazwa', 'd.name') }}</th>
+                        <th{% if pagination.isSorted('c.Name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Miasto', 'c.name') }}</th>
+                        <th{% if pagination.isSorted('d.Population') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Populacja [os]', 'd.population') }}</th>
+                        <th{% if pagination.isSorted('d.Area') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Powierzchnia [km2]', 'd.area') }}</th>
+                        <th>Akcje</th>
+                    </tr>
+
+                    {# table body #}
+                    {% for district in pagination %}
+                        <tr {% if loop.index is odd %}class="color"{% endif %}>
+                            <td>{{ district.id }}</td>
+                            <td>{{ district.name }}</td>
+                            <td>{{ district.city.name  }}</td>
+                            <td>{{ district.population }}</td>
+                            <td>{{ district.area  }}</td>
+                            <td class="text-right">
+                                <div class="btn-group" role="group">
+                                    <a href="{{ path('district.remove', { 'id': district.id }) }}" title="Usuń" class="confirm btn btn-danger btn-sm">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                    <a href="{{ path('district.edit', { 'id': district.id }) }}" title="Przejdź do edycji" class="btn btn-primary btn-sm">
+                                        <i class="fa fa-edit"></i>
+                                        Edytuj
+                                    </a>
+                                    <a href="{{ path('district.show', { 'id': district.id }) }}" title="Przejdź do podglądu" class="btn btn-secondary btn-sm">
+                                        <i class="fa fa-info"></i>
+                                        Podgląd
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document.body).on('click', '.confirm', function(e) {
+                e.preventDefault();
+
+                var url = $(this).attr('href');
+
+                if (confirm("Czy jesteś pewien?")) {
+                    location.href = url;
+                }
+
+                return false;
+            });
+
+            $(document.body).on('click', '.import', function(e) {
+                e.preventDefault();
+
+                var url = $(this).attr('href');
+
+                if (!confirm("Czy jesteś pewien? Import nadpisze wszystkie istniejące dzielnice \ndanymi ze stron miasta Gdańska i Krakowa")) {
+                    return false;
+                }
+
+                $('.wait-alert').fadeIn(300);
+
+                $.get('{{ path('district.import') }}', function () {
+                    $('.wait-alert').fadeOut(300, function () {
+                        location.reload();
+                    });
+                });
+            });
+
+        });
+    </script>
+{% endblock %}

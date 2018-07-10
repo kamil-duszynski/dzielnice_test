@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Aplikacja testowa - dzielnice miast">
+        <meta name="author" content="Kamil Duszyński">
+
+        <title>Dzielnice miast - aplikacja testowa</title>
+
+        <link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('fontawesome/css/all.css') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+
+    <body>
+
+        <div class="container">
+            <div class="jumbotron">
+                <h3>Aplikacja testowa - dzielnice miast</h3>
+                <p>
+                    Aplikacja pozwala na dodawanie, usuwanie, edycję, przeglądanie oraz import danych z oficjalnych stron miasta Gdańska i Krakowa
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mb-4 box-shadow">
+                        <h3 class="card-header">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {% block title %}{% endblock %}
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="text-right">
+                                        {% block navigation %}{% endblock %}
+                                    </div>
+                                </div>
+                            </div>
+                        </h3>
+                        <div class="card-body">
+                            {% block content %}{% endblock %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <p>&copy; {{ 'now'|date('Y') }} by Kamil Duszyński</p>
+            </footer>
+        </div>
+        {% block js %}{% endblock %}
+    </body>
+</html>

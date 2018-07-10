@@ -1,0 +1,32 @@
+{% if pageCount > 1 %}
+    <div class="text-center">
+        <div class="btn-group" role="group" aria-label="...">
+            {% if first is defined and current != first %}
+                <a href="{{ path(route, query|merge({(pageParameterName): first})) }}" class="btn btn-secondary">&lt;&lt;</a>
+            {% endif %}
+
+            {% if previous is defined %}
+                <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class="btn btn-secondary">&lt;</a>
+            {% endif %}
+
+            {% for page in pagesInRange %}
+                {% if page != current %}
+                    <a href="{{ path(route, query|merge({(pageParameterName): page})) }}" class="btn btn-secondary">{{ page }}</a>
+                {% else %}
+                    <button type="button" class="btn btn-primary">
+                        {{ page }}
+                    </button>
+                {% endif %}
+
+            {% endfor %}
+
+            {% if next is defined %}
+                <a href="{{ path(route, query|merge({(pageParameterName): next})) }}" class="btn btn-secondary">&gt;</a>
+            {% endif %}
+
+            {% if last is defined and current != last %}
+                <a href="{{ path(route, query|merge({(pageParameterName): last})) }}" class="btn btn-secondary">&gt;&gt;</a>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

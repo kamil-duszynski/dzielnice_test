@@ -1,0 +1,84 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Podgląd dzielnicy: {{ district.name }}
+{% endblock %}
+
+{% block navigation %}
+    <a class="btn btn-primary" href="{{ path('district.list') }}">
+        <i class="fa fa-chevron-left"></i> Powrót do listy
+    </a>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <strong>Nazwa</strong>
+                </div>
+                <div class="col-md-10">
+                    {{ district.name }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <strong>Miasto</strong>
+                </div>
+                <div class="col-md-10">
+                    {{ district.city.name }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <strong>Powierzchnia</strong>
+                </div>
+                <div class="col-md-10">
+                    {{ district.area }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <strong>Populacja</strong>
+                </div>
+                <div class="col-md-10">
+                    {{ district.population }}
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer text-right">
+            <div class="btn-group" role="group">
+                <a class="btn btn-primary" href="{{ path('district.edit', { 'id': district.id }) }}">
+                    <i class="fa fa-edit"></i>
+                    Edytuj
+                </a>
+                <a class="btn btn-danger confirm" href="{{ path('district.remove', { 'id': district.id }) }}">
+                    <i class="fa fa-times"></i>
+                    Usuń
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document.body).on('click', '.confirm', function(e) {
+                e.preventDefault();
+
+                var url = $(this).attr('href');
+
+                if (confirm("Czy jesteś pewien?")) {
+                    location.href = url;
+                }
+
+                return false;
+            });
+        });
+    </script>
+{% endblock %}

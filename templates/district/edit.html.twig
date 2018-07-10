@@ -1,0 +1,47 @@
+{% extends 'layout.html.twig' %}
+{% form_theme form 'forms/form_div_layout.html.twig' %}
+
+{% block title %}
+    Edycja dzielnicy: {{ district.name }}
+{% endblock %}
+
+{% block navigation %}
+    <a class="btn btn-primary" href="{{ path('district.list') }}">
+        <i class="fa fa-chevron-left"></i> Powrót do listy
+    </a>
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    {{ form_row(form.name)}}
+                </div>
+                <div class="col-md-6 form-group">
+                    {{ form_row(form.city)}}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    {{ form_row(form.area)}}
+                </div>
+                <div class="col-md-6 form-group">
+                    {{ form_row(form.population)}}
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer text-right">
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-save"></i>
+                Zapisz
+            </button>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}
