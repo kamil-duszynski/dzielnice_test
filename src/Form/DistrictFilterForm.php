@@ -88,6 +88,10 @@ class DistrictFilterForm extends AbstractType
             ->addModelTransformer(
                 new CallbackTransformer(
                     function ($id) use ($repository) {
+                        if (null === $id) {
+                            return null;
+                        }
+
                         return $repository->find($id);
                     },
                     function (City $city) {
